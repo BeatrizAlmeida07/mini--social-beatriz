@@ -1,13 +1,27 @@
+//=== ESTADO (DADOS DA APLICAÇÃO) === 
+
 let likeCount = 0;
-let curtido = false; //flag booleana
+let dislikeCount = 0;
+let curtido = false;
+let descurtido = false;
+
+//=== SERVICE (regras de negócio) ===
 
 function curtir() {
-
   if (curtido == false){
     likeCount++;
     curtido = true;
     document.getElementById("likeCount").innerText = likeCount;
-  } else {
+
+
+    if(descurtido == true){
+      dislikeCount--;
+      descurtido = false;
+      document.getElementById("dislikeCount").innerText = dislikeCount;
+
+    }
+
+  }else{
     likeCount--;
     curtido = false;
     document.getElementById("likeCount").innerText = likeCount;
@@ -15,26 +29,38 @@ function curtir() {
 
 }
 
-document.getElementById("likeBtn").addEventListener("click", curtir);
+function descurtir() {
+  if(descurtido == false){
+    dislikeCount++;
+    descurtido = true;
+    document.getElementById("dislikeCount").innerText = dislikeCount;
 
-let likeCount = 0;
-let naocurtido = false; //flag booleana
+    if(curtido == true){
+      likeCount--;
+      curtido = false;
+      document.getElementById("likeCount").innerText = likeCount;
+    }
 
-function curtir() {
-
-  if (naocurtido == false){
-    likeCount++;
-    naocurtido = true;
-    document.getElementById("likeCount").innerText = deslikeCount;
-  } else {
-    likeCount--;
-    curtido = false;
-    document.getElementById("likeCount").innerText = deslikeCount;
   }
+  else{
+    dislikeCount--;
+    descurtido = false;
+    document.getElementById("dislikeCount").innerText = dislikeCount;
+  }
+}
+// === CONTROLER (intermediação) ===
 
+function clicarCurtir(){
+  curtir();
+}
+function clicarDescurtir(){
+  descurtir();
 }
 
-document.getElementById("likeBtn").addEventListener("click", deslike);
+// === EVENTOS ===
+
+document.getElementById("likeBtn").addEventListener("click", clicarCurtir);
+document.getElementById("dislikeBtn").addEventListener("click", clicarDescurtir);
 
 
 
